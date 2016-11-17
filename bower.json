@@ -1,0 +1,9 @@
+{
+  "name": "light-gulp",
+  "homepage": "https://vietartisans.io/light-gulp/",
+  "authors": [
+    "Son Do <son@vietartisans.io>"
+  ],
+  "license": "MIT",
+  "private": true
+}
