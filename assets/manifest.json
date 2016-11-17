@@ -2,7 +2,9 @@
   "dependencies": {
     "main.js": {
       "files": [
-        "scripts/main.js"
+        "scripts/main.js",
+	"scripts/ro.js",
+	"scripts/tap.js"
       ],
       "main": true
     },
@@ -14,6 +16,6 @@
     }
   },
   "config": {
-    "devUrl": "http://banc.vietartisans.io"
+    "devUrl": "http://dev.vietartisans.io"
   }
 }
