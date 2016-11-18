@@ -15,10 +15,16 @@ $ gulp
 
 ```
 
-## Include assets URL in your file/web
+##Usage
 ###Wordpress
 
 - Edit functions.php file, insert this line to the end of file `include "wp-gulp.php";`
+
+###Static PHP
+
+- Similar to Wordpress, `include "html-gulp.php"`
+
+**Note**: With 2 methods above, you can use `echo asset_path('styles/main.css')` or `asset_path('scripts/main.js')` or `asset_path('images/image.png')`
 
 ###HTML
 
