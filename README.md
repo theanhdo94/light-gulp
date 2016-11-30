@@ -1,8 +1,7 @@
 # light-gulp
 Speedy front-end workflow. This nodejs application (gulp) will help us speed up our front-end workflow.
 
-#Installation
-##Setup files
+## Installation
 Go to theme directory or anywhere you place your assets. And run these commands:
 
 ```
@@ -10,22 +9,29 @@ Go to theme directory or anywhere you place your assets. And run these commands:
 
 $ git init .
 $ git remote add origin git@github.com:Viet-Artisans/light-gulp.git
+$ git pull origin master
 $ mkdir bower_components
 $ gulp
 
 ```
 
-##Usage
-###Wordpress
+### Wordpress
 
 - Edit functions.php file, insert this line to the end of file `include "wp-gulp.php";`
 
-###Static PHP
+### Static PHP
 
-- Similar to Wordpress, `include "html-gulp.php"`
+- In your index.php (or main.php whatever your application using) add this line `include "html-gulp.php"` to import asset_path function to the application.
 
-**Note**: With 2 methods above, you can use `echo asset_path('styles/main.css')` or `asset_path('scripts/main.js')` or `asset_path('images/image.png')`
+**Note**: With 2 methods above, you can use:
 
+```
+<?php
+echo asset_path('styles/main.css');
+echo asset_path('scripts/main.js');
+echo asset_path('images/image.png');
+?>
+```
 ###HTML
 
 - Use <link> and <javascript> tag to include `dist/styles/main.css` and `dist/scripts/main.js` to your file/web.
