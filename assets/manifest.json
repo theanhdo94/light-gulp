@@ -3,12 +3,27 @@
     "main.js": {
       "files": [
         "scripts/main.js"
+      ]
+    },
+    "vendor.js": {
+      "files": [
+
       ],
       "main": true
+    },
+    "atf.css": {
+      "files": [
+        "styles/above-the-fold.scss"
+      ]
     },
     "main.css": {
       "files": [
         "styles/main.scss"
+      ]
+    },
+    "vendor.css": {
+      "files": [
+
       ],
       "main": true
     }

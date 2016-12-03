@@ -166,7 +166,7 @@ var writeToManifest = function(directory) {
 // `gulp styles` - Compiles, combines, and optimizes Bower CSS and project CSS.
 // By default this task will only log a warning if a precompiler error is
 // raised. If the `--production` flag is set: this task will fail outright.
-gulp.task('styles', [], function() {
+gulp.task('styles', ['wiredep'], function() {
   var merged = merge();
   manifest.forEachDependency('css', function(dep) {
     var cssTasksInstance = cssTasks(dep.name);
@@ -183,12 +183,44 @@ gulp.task('styles', [], function() {
     .pipe(writeToManifest('styles'));
 });
 
+gulp.task('maincss', ['wiredep'], function() {
+  var merged = merge();
+  manifest.forEachDependency('css', function(dep) {
+    var cssTasksInstance = cssTasks(dep.name);
+    if(dep.name == 'main.css') {
+      if (!enabled.failStyleTask) {
+        cssTasksInstance.on('error', function(err) {
+          console.error(err.message);
+          this.emit('end');
+        });
+      }
+      merged.add(gulp.src(dep.globs, {base: 'styles'})
+        .pipe(cssTasksInstance));
+    }
+  });
+  return merged
+    .pipe(writeToManifest('styles'));
+});
+
 // ### Scripts
 // `gulp scripts` - Runs JSHint then compiles, combines, and optimizes Bower JS
 // and project JS.
-gulp.task('scripts', ['jshint'], function() {
+gulp.task('scripts', [], function() {
   var merged = merge();
   manifest.forEachDependency('js', function(dep) {
+    merged.add(
+      gulp.src(dep.globs, {base: 'scripts'})
+        .pipe(jsTasks(dep.name))
+    );
+  });
+  return merged
+    .pipe(writeToManifest('scripts'));
+});
+
+gulp.task('mainjs', [], function() {
+  var merged = merge();
+  manifest.forEachDependency('js', function(dep) {
+    if(dep.name == 'main.js')
     merged.add(
       gulp.src(dep.globs, {base: 'scripts'})
         .pipe(jsTasks(dep.name))
@@ -244,11 +276,15 @@ gulp.task('clean', require('del').bind(null, [path.dist]));
 // See: http://www.browsersync.io
 gulp.task('watch', function() {
   browserSync.init({
-    files: ['*.html'],
-    proxy: config.devUrl
+    files: ['{lib,templates}/**/*.php', '*.php'],
+    proxy: config.devUrl,
+    snippetOptions: {
+      whitelist: ['/wp-admin/admin-ajax.php'],
+      blacklist: ['/wp-admin/**']
+    }
   });
-  gulp.watch([path.source + 'styles/**/*'], ['styles']);
-  gulp.watch([path.source + 'scripts/**/*'], ['scripts']);
+  gulp.watch([path.source + 'styles/**/*'], ['maincss']);
+  gulp.watch([path.source + 'scripts/**/*'], ['mainjs']);
   //gulp.watch([path.source + 'fonts/**/*'], ['fonts']);
   //gulp.watch([path.source + 'images/**/*'], ['images']);
   gulp.watch(['bower.json', 'assets/manifest.json'], ['build']);
@@ -261,6 +297,12 @@ gulp.task('build', function(callback) {
   runSequence('styles',
               'scripts',
               ['fonts', 'images'],
+              callback);
+});
+
+gulp.task('main', function(callback) {
+  runSequence('maincss',
+              'mainjs',
               callback);
 });
 
@@ -279,6 +321,6 @@ gulp.task('wiredep', function() {
 
 // ### Gulp
 // `gulp` - Run a complete build. To compile for production run `gulp --production`.
-gulp.task('default', ['clean'], function() {
-  gulp.start('build');
+gulp.task('default', [], function() {
+  gulp.start('main');
 });
