@@ -2,7 +2,7 @@
 
 Speedy front-end workflow. This nodejs application (gulp) will help us to speed up our front-end workflow.
 
-Version: 2.0
+Version: 2.1
 
 ## Requirements
 
@@ -104,6 +104,9 @@ It would work the same with CSS. Playing around with manifest.json file and have
 Read more about this in [issue](https://github.com/Viet-Artisans/light-gulp/issues/25) to understand file structure.
 
 ## Change Logs
+=== 2.1 ===
+* Remove wiredep
+
 === 2.0 ===
 * Split it into seperate branches
 * Use composer
