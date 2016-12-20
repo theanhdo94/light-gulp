@@ -6,10 +6,10 @@
       ]
     },
     "vendor.js": {
+      "main": true,
       "files": [
 
-      ],
-      "main": true
+      ]
     },
     "atf.css": {
       "files": [

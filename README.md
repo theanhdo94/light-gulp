@@ -31,6 +31,7 @@ $ git init .
 $ git remote add origin git@github.com:Viet-Artisans/light-gulp.git
 $ git pull origin master
 $ npm install
+$ bower install
 $ gulp
 
 ```
